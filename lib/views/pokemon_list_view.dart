@@ -3,6 +3,7 @@ import 'package:pokemon_app/model/pokemon_model.dart';
 import 'package:pokemon_app/view_model/pokemon_list_view_model.dart';
 import 'package:pokemon_app/views/counter_view.dart';
 import 'package:pokemon_app/widgets/pokemon_card.dart';
+import 'package:provider/provider.dart';
 
 class PokemonListView extends StatefulWidget {
   const PokemonListView({super.key});
@@ -12,12 +13,10 @@ class PokemonListView extends StatefulWidget {
 }
 
 class _PokemonListState extends State<PokemonListView> {
-  final PokemonListViewModel pokemonListViewModel =
-      PokemonListViewModel();
-
   @override
   Widget build(BuildContext context) {
-    List<Pokemon> pokemonList = pokemonListViewModel.pokemonList;
+    var pokemonProvider = Provider.of<PokemonListViewModel>(context);
+    List<Pokemon> pokemonList = pokemonProvider.pokemonList;
 
     return Scaffold(
         appBar: AppBar(
@@ -39,13 +38,13 @@ class _PokemonListState extends State<PokemonListView> {
           ],
         )),
         floatingActionButton: Container(
-          child: pokemonListViewModel.isLoading
+          child: pokemonProvider.isLoading
               ? const CircularProgressIndicator()
               : CustomFloatingActionButton(
                   icon: Icons.add,
                   onPressed: () {
                     setState(() {
-                      pokemonListViewModel.add().then((_) {
+                      pokemonProvider.add().then((_) {
                         setState(() {});
                       });
                     });
