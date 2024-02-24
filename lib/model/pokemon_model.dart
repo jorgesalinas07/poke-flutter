@@ -1,18 +1,28 @@
 class Pokemon {
+  int id;
+  List<StatElement> stats;
   List<Type> types;
+  int weight;
   String name;
   Sprites sprites;
 
   Pokemon({
+    required this.id,
+    required this.stats,
     required this.types,
+    required this.weight,
     required this.name,
     required this.sprites,
   });
 
   factory Pokemon.fromMap(Map<dynamic, dynamic> json) => Pokemon(
+        id: json["id"],
         name: json["name"],
         sprites: Sprites.fromMap(json["sprites"]),
+        stats: List<StatElement>.from(
+            json["stats"].map((x) => StatElement.fromMap(x))),
         types: List<Type>.from(json["types"].map((x) => Type.fromMap(x))),
+        weight: json["weight"],
       );
 }
 
@@ -46,6 +56,24 @@ class Sprites {
         frontFemale: json["front_female"],
         frontShiny: json["front_shiny"],
         frontShinyFemale: json["front_shiny_female"],
+      );
+}
+
+class StatElement {
+  int baseStat;
+  int effort;
+  TypeClass stat;
+
+  StatElement({
+    required this.baseStat,
+    required this.effort,
+    required this.stat,
+  });
+
+  factory StatElement.fromMap(Map<String, dynamic> json) => StatElement(
+        baseStat: json["base_stat"],
+        effort: json["effort"],
+        stat: TypeClass.fromMap(json["stat"]),
       );
 }
 
