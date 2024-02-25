@@ -63,7 +63,11 @@ class PokemonCard extends StatelessWidget {
             ),
           )),
       onTap: () {
-        Navigator.pushNamed(context, "/details", arguments: pokemon);
+        Map<String, dynamic> arguments = {
+          'pokemon': pokemon,
+          'pokemonCaptures': pokemonCaptures,
+        };
+        Navigator.pushNamed(context, "/details", arguments: arguments);
       },
     );
   }

@@ -14,7 +14,6 @@ class PokemonListView extends StatefulWidget {
 }
 
 class _PokemonListState extends State<PokemonListView> {
-  final PokemonListViewModel pokemonListViewModel = PokemonListViewModel();
 
   @override
   void initState() {
@@ -44,6 +43,7 @@ class _PokemonListState extends State<PokemonListView> {
                     pokemonCaptures: const [],
                   );
                 }),
+            const MyPokemonsButton(),
           ],
         )),
         floatingActionButton: Container(
@@ -60,5 +60,39 @@ class _PokemonListState extends State<PokemonListView> {
                   },
                 ),
         ));
+  }
+}
+
+class MyPokemonsButton extends StatelessWidget {
+  const MyPokemonsButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: (() => Navigator.pushNamed(context, "/my-pokemons")),
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        child: Container(
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: const Color.fromARGB(255, 248, 238, 251),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black,
+                    blurRadius: 0.08,
+                  )
+                ]),
+            height: 60,
+            width: 300,
+            child: const Text(
+              "My Pokemons",
+              style: TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.w700,
+              ),
+            )),
+      ),
+    );
   }
 }

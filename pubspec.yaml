@@ -68,6 +68,7 @@ flutter:
   assets:
     - images/pokemon_logo.png
     - images/stats_types/
+    - images/default.jpeg
 
   # To add assets to your application, add an assets section, like this:
   # assets:
