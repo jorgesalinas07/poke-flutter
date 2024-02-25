@@ -1,5 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
 import 'package:pokemon_app/model/pokemon_model.dart';
+import 'package:pokemon_app/utils/file_storage_utils.dart';
+import 'package:pokemon_app/utils/permission_utils.dart';
 
 class PokemonDetails extends StatelessWidget {
   const PokemonDetails({super.key});
@@ -85,7 +91,31 @@ Widget buildPokemonHeader(Pokemon pokemon) {
                 icon: const Icon(Icons.camera_alt_rounded),
                 color: Colors.white,
                 iconSize: 60,
-                onPressed: () {},
+                onPressed: () async {
+                  bool cameraPermissionChecked = await checkCameraPermission();
+                  if (!cameraPermissionChecked) return;
+                  final picker = ImagePicker();
+                  final XFile? pickedFile = await picker.pickImage(
+                    source: ImageSource.camera,
+                  );
+                  if (pickedFile == null) return;
+                  Directory localDirectory =
+                      await FileSystemUtils.getLocalDirectory(
+                          'pokemon_id_${pokemon.id.toString()}');
+                  String fileName = basename(pickedFile.path);
+
+                  String fileDestination = '${localDirectory.path}$fileName';
+
+                  File sourceFile = File(pickedFile.path);
+                  File destination = File(fileDestination);
+
+                  await destination
+                      .writeAsBytes(await sourceFile.readAsBytes());
+
+                  debugPrint("Saved Image Path: $fileDestination");
+                  debugPrint(
+                      "Saved Image Size: ${await File(fileDestination).length()} bytes");
+                },
               )),
         ],
       ));
