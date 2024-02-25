@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pokemon_app/splash_screen.dart';
 import 'package:pokemon_app/view_model/pokemon_list_view_model.dart';
+import 'package:pokemon_app/views/my_pokemons_view.dart';
 import 'package:pokemon_app/views/pokemon_details.dart';
 import 'package:pokemon_app/views/pokemon_list_view.dart';
 import 'package:provider/provider.dart';
@@ -57,6 +58,7 @@ class MyHomePageState extends State<MyHomePage> {
       home: const PokemonListView(),
       routes: {
         "/details": (context) => const PokemonDetails(),
+        "/my-pokemons": (context) => const MyPokemonsView(),
       },
     );
   }
